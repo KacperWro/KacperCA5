@@ -8,16 +8,16 @@ public class Country {
     private String capital;
     private int population;
     public double areaSqKm;
-    public double popDensity;
+    public double popDensitySqKm;
 
 
     //Constructor
-    public Country(String countryName, String capital, int population, double areaSqKm, double popDensity) {
+    public Country(String countryName, String capital, int population, double areaSqKm, double popDensitySqKm) {
         this.countryName = countryName;
         this.capital = capital;
         this.population = population;
         this.areaSqKm = areaSqKm;
-        this.popDensity = popDensity;
+        this.popDensitySqKm = popDensitySqKm;
     }
 
 
@@ -38,8 +38,8 @@ public class Country {
         return areaSqKm;
     }
 
-    public double getPopDensity() {
-        return popDensity;
+    public double getPopDensitySqKm() {
+        return popDensitySqKm;
     }
 
 
@@ -60,8 +60,8 @@ public class Country {
         this.areaSqKm = areaSqKm;
     }
 
-    public void setPopDensity(double popDensity) {
-        this.popDensity = popDensity;
+    public void setPopDensitySqKm(double popDensitySqKm) {
+        this.popDensitySqKm = popDensitySqKm;
     }
 
     //hashCode and equals
@@ -70,11 +70,11 @@ public class Country {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Country country = (Country) o;
-        return population == country.population && Double.compare(country.areaSqKm, areaSqKm) == 0 && Double.compare(country.popDensity, popDensity) == 0 && Objects.equals(countryName, country.countryName) && Objects.equals(capital, country.capital);
+        return population == country.population && Double.compare(country.areaSqKm, areaSqKm) == 0 && Double.compare(country.popDensitySqKm, popDensitySqKm) == 0 && Objects.equals(countryName, country.countryName) && Objects.equals(capital, country.capital);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(countryName, capital, population, areaSqKm, popDensity);
+        return Objects.hash(countryName, capital, population, areaSqKm, popDensitySqKm);
     }
 }
