@@ -80,7 +80,10 @@ public class Country {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Country country = (Country) o;
-        return population == country.population && Double.compare(country.areaSqKm, areaSqKm) == 0 && Double.compare(country.popDensitySqKm, popDensitySqKm) == 0 && Objects.equals(countryName, country.countryName) && Objects.equals(capital, country.capital);
+        return population == country.population && Double.compare(country.areaSqKm, areaSqKm) == 0
+                && Double.compare(country.popDensitySqKm, popDensitySqKm) == 0
+                && Objects.equals(countryName, country.countryName)
+                && Objects.equals(capital, country.capital);
     }
 
     @Override
