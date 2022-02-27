@@ -20,6 +20,16 @@ public class Country {
         this.popDensitySqKm = popDensitySqKm;
     }
 
+    public void displayCountry()
+    {
+        System.out.println("\n" + this.countryName.toUpperCase());
+        System.out.println("--------------------------------");
+        System.out.println("Capital City      : " + this.capital);
+        System.out.println("Population        : " + this.population);
+        System.out.println("Area              : " + this.areaSqKm + " km^2");
+        System.out.println("Population Density: " + this.popDensitySqKm + "/km^2");
+        System.out.println("--------------------------------");
+    }
 
     //Getters
     public String getCountryName() {
