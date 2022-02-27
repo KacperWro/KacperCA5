@@ -2,6 +2,7 @@ package com.company;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -29,21 +30,24 @@ public class Main {
         countryList.add(new Country("France","Paris",67413000,	643801,116));
 
         HashMap<String, Country> countryHashMap = new HashMap<>();
+        TreeMap<Integer, Country> countryTreeMap = new TreeMap<>();
 
         for (Country country : countryList)
         {
-            countryHashMap.put(country.getCountryName(),country);
+            countryHashMap.put(country.getCountryName().toUpperCase(),country);
+            countryTreeMap.put(country.getPopulation(), country);
         }
 
         while (!exit)
         {
             try
             {
-                System.out.println("\n************************");
+                System.out.println("\n*************************************");
                 System.out.println("1. Display all countries");
                 System.out.println("2. Display country by name");
-                System.out.println("3. Exit");
-                System.out.println("************************\n");
+                System.out.println("3. Display all countries by population");
+                System.out.println("4. Exit");
+                System.out.println("*************************************\n");
 
                 System.out.print("Select menu item:");
                 int option = input.nextInt();
@@ -62,7 +66,7 @@ public class Main {
                     System.out.print("Enter country name: ");
                     String countryName = input.nextLine();
 
-                    Country foundCountry = countryHashMap.get(countryName);
+                    Country foundCountry = countryHashMap.get(countryName.toUpperCase());
 
                     if (foundCountry != null)
                     {
@@ -75,6 +79,13 @@ public class Main {
                     }
                 }
                 else if (option == 3)
+                {
+                    for (Integer key : countryTreeMap.keySet())
+                    {
+                        countryTreeMap.get(key).displayCountry();
+                    }
+                }
+                else if (option == 4)
                 {
                     exit = true;
                 }
