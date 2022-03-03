@@ -1,10 +1,6 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.TreeMap;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
@@ -31,6 +27,7 @@ public class Main {
 
         HashMap<String, Country> countryHashMap = new HashMap<>();
         TreeMap<Integer, Country> countryTreeMap = new TreeMap<>();
+        PriorityQueue<Country> countryPriorityQueueSim = new PriorityQueue<>(new CountryPopulationComparator());
 
         for (Country country : countryList)
         {
@@ -46,7 +43,8 @@ public class Main {
                 System.out.println("1. Display all countries");
                 System.out.println("2. Display country by name");
                 System.out.println("3. Display all countries by population");
-                System.out.println("4. Exit");
+                System.out.println("4. PriorityQueue Sequence Simulation");
+                System.out.println("5. Exit");
                 System.out.println("*************************************\n");
 
                 System.out.print("Select menu item:");
@@ -87,6 +85,33 @@ public class Main {
                 }
                 else if (option == 4)
                 {
+                    countryPriorityQueueSim.add(countryHashMap.get("LIECHTENSTEIN"));
+                    countryPriorityQueueSim.add(countryHashMap.get("ICELAND"));
+
+                    System.out.println("Added two least populated countries");
+
+                    countryPriorityQueueSim.add(countryHashMap.get("IRELAND"));
+                    countryPriorityQueueSim.add(countryHashMap.get("DENMARK"));
+
+                    System.out.println("Added two moderately populated countries");
+
+                    countryPriorityQueueSim.remove().displayCountry();
+
+                    System.out.println("COUNTRY REMOVED AND DISPLAYED");
+
+                    countryPriorityQueueSim.add(countryHashMap.get("UNITED STATES OF AMERICA"));
+
+                    System.out.println("Added one most populated country");
+
+                    while(!countryPriorityQueueSim.isEmpty())
+                    {
+                        countryPriorityQueueSim.remove().displayCountry();
+                    }
+
+                    System.out.println("REMAINING COUNTRIES HAVE BEEN DISPLAYED AND REMOVED");
+                }
+                else if (option == 5)
+                {
                     exit = true;
                 }
                 else
@@ -99,11 +124,7 @@ public class Main {
                 System.out.println("Invalid input, please try again");
                 input.nextLine();
             }
-
-
         }
-
     }
-
-
 }
+

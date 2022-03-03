@@ -10,7 +10,6 @@ public class Country {
     public double areaSqKm;
     public double popDensitySqKm;
 
-
     //Constructor
     public Country(String countryName, String capital, int population, double areaSqKm, double popDensitySqKm) {
         this.countryName = countryName;
@@ -35,19 +34,15 @@ public class Country {
     public String getCountryName() {
         return countryName;
     }
-
     public String getCapital() {
         return capital;
     }
-
     public int getPopulation() {
         return population;
     }
-
     public double getAreaSqKm() {
         return areaSqKm;
     }
-
     public double getPopDensitySqKm() {
         return popDensitySqKm;
     }
@@ -57,19 +52,15 @@ public class Country {
     public void setCountryName(String countryName) {
         this.countryName = countryName;
     }
-
     public void setCapital(String capital) {
         this.capital = capital;
     }
-
     public void setPopulation(int population) {
         this.population = population;
     }
-
     public void setAreaSqKm(double areaSqKm) {
         this.areaSqKm = areaSqKm;
     }
-
     public void setPopDensitySqKm(double popDensitySqKm) {
         this.popDensitySqKm = popDensitySqKm;
     }
