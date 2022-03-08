@@ -14,16 +14,18 @@ public class Main {
         boolean exit = false;
 
         ArrayList<Country> countryList = new ArrayList<>();
-        countryList.add(new Country("Ireland","Dublin",5011500,70273,71.3));
-        countryList.add(new Country("United Kingdom","London",67081000,242495,270.7));
-        countryList.add(new Country("Iceland","Reykjavik",366425,103000,3.5));
-        countryList.add(new Country("Luxembourg","Luxembourg City",633622,2586.4,242));
-        countryList.add(new Country("Liechtenstein","Vaduz",38896,160,237));
-        countryList.add(new Country("Denmark","Copenhagen",5873420,42933 ,137.65));
-        countryList.add(new Country("Poland","Warsaw",38179800,312696 ,123));
-        countryList.add(new Country("Germany","Berlin", 83190556,357022 ,232));
-        countryList.add(new Country("United States of America","Washington",331893745,9833520,33.6));
-        countryList.add(new Country("France","Paris",67413000,	643801,116));
+        countryList.add(new Country("Europe", "Ireland","Dublin",5011500,70273,71.3));
+        countryList.add(new Country("Europe","United Kingdom","London",67081000,242495,270.7));
+        countryList.add(new Country("Europe","Iceland","Reykjavik",366425,103000,3.5));
+        countryList.add(new Country("Europe","Luxembourg","Luxembourg City",633622,2586.4,242));
+        countryList.add(new Country("Europe","Liechtenstein","Vaduz",38896,160,237));
+        countryList.add(new Country("North America", "Mexico", "Mexico City", 126014024,1972550,61));
+        countryList.add(new Country("Europe","Denmark","Copenhagen",5873420,42933 ,137.65));
+        countryList.add(new Country("Europe","Poland","Warsaw",38179800,312696 ,123));
+        countryList.add(new Country("Europe","Germany","Berlin", 83190556,357022 ,232));
+        countryList.add(new Country("North America", "United States of America","Washington",331893745,9833520,33.6));
+        countryList.add(new Country("Europe","France","Paris",67413000,	643801,116));
+        countryList.add(new Country("North America", "Canada", "Ottawa", 38436447,9984670,4.2));
 
         HashMap<String, Country> countryHashMap = new HashMap<>();
         TreeMap<Integer, Country> countryTreeMap = new TreeMap<>();
@@ -44,7 +46,8 @@ public class Main {
                 System.out.println("2. Display country by name");
                 System.out.println("3. Display all countries by population");
                 System.out.println("4. PriorityQueue Sequence Simulation");
-                System.out.println("5. Exit");
+                System.out.println("5. PriorityQueue Two-Field Comparison Demo");
+                System.out.println("6. Exit");
                 System.out.println("*************************************\n");
 
                 System.out.print("Select menu item:");
@@ -111,6 +114,16 @@ public class Main {
                     System.out.println("REMAINING COUNTRIES HAVE BEEN DISPLAYED AND REMOVED");
                 }
                 else if (option == 5)
+                {
+                    PriorityQueue<Country> pqTwoFields = new PriorityQueue<>(new CountryPopContinentComparator());
+                    pqTwoFields.addAll(countryList);
+
+                    while(!pqTwoFields.isEmpty())
+                    {
+                        pqTwoFields.remove().displayCountry();
+                    }
+                }
+                else if (option == 6)
                 {
                     exit = true;
                 }

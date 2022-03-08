@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class Country {
     //Fields
+    private String continent;
     private String countryName;
     private String capital;
     private int population;
@@ -11,7 +12,8 @@ public class Country {
     public double popDensitySqKm;
 
     //Constructor
-    public Country(String countryName, String capital, int population, double areaSqKm, double popDensitySqKm) {
+    public Country(String continent, String countryName, String capital, int population, double areaSqKm, double popDensitySqKm) {
+        this.continent = continent;
         this.countryName = countryName;
         this.capital = capital;
         this.population = population;
@@ -23,6 +25,7 @@ public class Country {
     {
         System.out.println("\n" + this.countryName.toUpperCase());
         System.out.println("--------------------------------");
+        System.out.println("Continent         : " + this.continent);
         System.out.println("Capital City      : " + this.capital);
         System.out.println("Population        : " + this.population);
         System.out.println("Area              : " + this.areaSqKm + " km^2");
@@ -31,6 +34,7 @@ public class Country {
     }
 
     //Getters
+    public String getContinent(){ return continent; }
     public String getCountryName() {
         return countryName;
     }
@@ -49,6 +53,7 @@ public class Country {
 
 
     //Setters
+    public void setContinent(String continent){ this.continent = continent; }
     public void setCountryName(String countryName) {
         this.countryName = countryName;
     }
