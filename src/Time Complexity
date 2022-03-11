@@ -1,0 +1,17 @@
+LIST OF OPERATIONS PERFORMED BY EACH DATA STRUCTURE IN MY CODE AND THEIR TIME COMPLEXITIES
+
+ARRAYLIST
+Inserting/Adding elements [add()]  - O(1) or O(N)
+Accessing an element [get()] - O(1)
+
+HASHMAP
+Inserting/Adding elements [put()] - O(1)
+Accessing an element [get()] - O(1)
+
+TREEMAP
+Insertion [put()] - O(LogN)
+Accessing an element [get()] - O(LogN)
+
+PRIORITY QUEUE
+Insertion [add()] - O(LogN)
+Accessing/Deleting element [remove()] - O(LogN)

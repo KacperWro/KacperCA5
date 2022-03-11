@@ -13,7 +13,7 @@ public class Main {
         Scanner input = new Scanner(System.in);
         boolean exit = false;
 
-        ArrayList<Country> countryList = new ArrayList<>();
+        List<Country> countryList = new ArrayList<>();
         countryList.add(new Country("Europe", "Ireland","Dublin",5011500,70273,71.3));
         countryList.add(new Country("Europe","United Kingdom","London",67081000,242495,270.7));
         countryList.add(new Country("Europe","Iceland","Reykjavik",366425,103000,3.5));
@@ -27,9 +27,9 @@ public class Main {
         countryList.add(new Country("Europe","France","Paris",67413000,	643801,116));
         countryList.add(new Country("North America", "Canada", "Ottawa", 38436447,9984670,4.2));
 
-        HashMap<String, Country> countryHashMap = new HashMap<>();
-        TreeMap<Integer, Country> countryTreeMap = new TreeMap<>();
-        PriorityQueue<Country> countryPriorityQueueSim = new PriorityQueue<>(new CountryPopulationComparator());
+        Map<String, Country> countryHashMap = new HashMap<>();
+        Map<Integer, Country> countryTreeMap = new TreeMap<>();
+        Queue<Country> countryPriorityQueueSim = new PriorityQueue<>(new CountryPopulationComparator());
 
         for (Country country : countryList)
         {
@@ -53,83 +53,66 @@ public class Main {
                 System.out.print("Select menu item:");
                 int option = input.nextInt();
 
-                if (option == 1)
-                {
-                    for (Country country : countryList)
-                    {
-                        country.displayCountry();
-                    }
-                }
-                else if (option == 2)
-                {
-                    input.nextLine();
+                switch (option) {
+                    case 1:
+                        display(countryList);
+                        break;
+                    case 2:
+                        input.nextLine();
 
-                    System.out.print("Enter country name: ");
-                    String countryName = input.nextLine();
+                        System.out.print("Enter country name: ");
+                        String countryName = input.nextLine();
 
-                    Country foundCountry = countryHashMap.get(countryName.toUpperCase());
+                        Country foundCountry = countryHashMap.get(countryName.toUpperCase());
 
-                    if (foundCountry != null)
-                    {
-                        System.out.println();
-                        foundCountry.displayCountry();
-                    }
-                    else
-                    {
-                        System.out.println("Country not found");
-                    }
-                }
-                else if (option == 3)
-                {
-                    for (Integer key : countryTreeMap.keySet())
-                    {
-                        countryTreeMap.get(key).displayCountry();
-                    }
-                }
-                else if (option == 4)
-                {
-                    countryPriorityQueueSim.add(countryHashMap.get("LIECHTENSTEIN"));
-                    countryPriorityQueueSim.add(countryHashMap.get("ICELAND"));
+                        if (foundCountry != null)
+                        {
+                            System.out.println();
+                            foundCountry.displayCountry();
+                        }
+                        else
+                        {
+                            System.out.println("Country not found");
+                        }
+                        break;
+                    case 3:
+                        display(countryTreeMap);
+                        break;
+                    case 4:
+                        countryPriorityQueueSim.add(countryHashMap.get("LIECHTENSTEIN"));
+                        countryPriorityQueueSim.add(countryHashMap.get("ICELAND"));
 
-                    System.out.println("Added two least populated countries");
+                        System.out.println("Added two least populated countries");
 
-                    countryPriorityQueueSim.add(countryHashMap.get("IRELAND"));
-                    countryPriorityQueueSim.add(countryHashMap.get("DENMARK"));
+                        countryPriorityQueueSim.add(countryHashMap.get("IRELAND"));
+                        countryPriorityQueueSim.add(countryHashMap.get("DENMARK"));
 
-                    System.out.println("Added two moderately populated countries");
+                        System.out.println("Added two moderately populated countries");
 
-                    countryPriorityQueueSim.remove().displayCountry();
-
-                    System.out.println("COUNTRY REMOVED AND DISPLAYED");
-
-                    countryPriorityQueueSim.add(countryHashMap.get("UNITED STATES OF AMERICA"));
-
-                    System.out.println("Added one most populated country");
-
-                    while(!countryPriorityQueueSim.isEmpty())
-                    {
                         countryPriorityQueueSim.remove().displayCountry();
-                    }
 
-                    System.out.println("REMAINING COUNTRIES HAVE BEEN DISPLAYED AND REMOVED");
-                }
-                else if (option == 5)
-                {
-                    PriorityQueue<Country> pqTwoFields = new PriorityQueue<>(new CountryPopContinentComparator());
-                    pqTwoFields.addAll(countryList);
+                        System.out.println("COUNTRY REMOVED AND DISPLAYED");
 
-                    while(!pqTwoFields.isEmpty())
-                    {
-                        pqTwoFields.remove().displayCountry();
-                    }
-                }
-                else if (option == 6)
-                {
-                    exit = true;
-                }
-                else
-                {
-                    System.out.println("Invalid input, please try again");
+                        countryPriorityQueueSim.add(countryHashMap.get("UNITED STATES OF AMERICA"));
+
+                        System.out.println("Added one most populated country");
+
+                        display(countryPriorityQueueSim);
+
+                        System.out.println("REMAINING COUNTRIES HAVE BEEN DISPLAYED AND REMOVED");
+                        break;
+                    case 5:
+                        PriorityQueue<Country> pqTwoFields = new PriorityQueue<>(new CountryPopContinentComparator());
+                        pqTwoFields.addAll(countryList);
+
+                        display(pqTwoFields);
+                        break;
+                    case 6:
+                        exit = true;
+                        break;
+                    default:
+                        System.out.println("Invalid input, please try again");
+                        break;
                 }
             }
             catch (InputMismatchException e)
@@ -137,6 +120,28 @@ public class Main {
                 System.out.println("Invalid input, please try again");
                 input.nextLine();
             }
+        }
+    }
+
+    public static void display(List<Country> countryList)
+    {
+        for (Country country : countryList)
+        {
+            country.displayCountry();
+        }
+    }
+    public static void display(Map<Integer, Country> countryMap)
+    {
+        for (Integer key : countryMap.keySet())
+        {
+            countryMap.get(key).displayCountry();
+        }
+    }
+    public static void display(Queue<Country> countryQueue)
+    {
+        while(!countryQueue.isEmpty())
+        {
+            countryQueue.remove().displayCountry();
         }
     }
 }
