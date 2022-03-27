@@ -21,13 +21,13 @@ public class Main {
         boolean exit = false;
 
         List<Country> countryList = ICountryDao.findAllCountries();
-        Map<String, Country> countryHashMap = new HashMap<>();
+//        Map<String, Country> countryHashMap = new HashMap<>();
         Map<Integer, Country> countryTreeMap = new TreeMap<>();
         Queue<Country> countryPriorityQueueSim = new PriorityQueue<>(new CountryPopulationComparator());
 
         for (Country country : countryList)
         {
-            countryHashMap.put(country.getCountryName().toUpperCase(),country);
+//            countryHashMap.put(country.getCountryName().toUpperCase(),country);
             countryTreeMap.put(country.getPopulation(), country);
         }
 
@@ -57,7 +57,8 @@ public class Main {
                         System.out.print("Enter country name: ");
                         String countryName = input.nextLine();
 
-                        Country foundCountry = countryHashMap.get(countryName.toUpperCase());
+//                        Country foundCountry = countryHashMap.get(countryName.toUpperCase());//Old version looked for country in Country HashMap
+                        Country foundCountry = ICountryDao.findCountryByName(countryName);
 
                         if (foundCountry != null)
                         {
@@ -73,13 +74,19 @@ public class Main {
                         display(countryTreeMap);
                         break;
                     case 4:
-                        countryPriorityQueueSim.add(countryHashMap.get("LIECHTENSTEIN"));
-                        countryPriorityQueueSim.add(countryHashMap.get("ICELAND"));
+//                        countryPriorityQueueSim.add(countryHashMap.get("LIECHTENSTEIN"));
+//                        countryPriorityQueueSim.add(countryHashMap.get("ICELAND"));
+
+                        countryPriorityQueueSim.add(ICountryDao.findCountryByName("LIECHTENSTEIN"));
+                        countryPriorityQueueSim.add(ICountryDao.findCountryByName("ICELAND"));
 
                         System.out.println("Added two least populated countries");
 
-                        countryPriorityQueueSim.add(countryHashMap.get("IRELAND"));
-                        countryPriorityQueueSim.add(countryHashMap.get("DENMARK"));
+//                        countryPriorityQueueSim.add(countryHashMap.get("IRELAND"));
+//                        countryPriorityQueueSim.add(countryHashMap.get("DENMARK"));
+
+                        countryPriorityQueueSim.add(ICountryDao.findCountryByName("IRELAND"));
+                        countryPriorityQueueSim.add(ICountryDao.findCountryByName("DENMARK"));
 
                         System.out.println("Added two moderately populated countries");
 
@@ -87,7 +94,9 @@ public class Main {
 
                         System.out.println("COUNTRY REMOVED AND DISPLAYED");
 
-                        countryPriorityQueueSim.add(countryHashMap.get("UNITED STATES OF AMERICA"));
+//                        countryPriorityQueueSim.add(countryHashMap.get("UNITED STATES OF AMERICA"));
+
+                        countryPriorityQueueSim.add(ICountryDao.findCountryByName("UNITED STATES OF AMERICA"));
 
                         System.out.println("Added one most populated country");
 
