@@ -1,32 +1,26 @@
 package com.company;
 
+import DAOs.CountryDaoInterface;
+import DAOs.MySqlCountryDao;
+import DTOs.Country;
+import DTOs.CountryPopContinentComparator;
+import DTOs.CountryPopulationComparator;
+import Exceptions.DaoException;
 import java.util.*;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws DaoException {
         app();
     }
 
-    public static void app()
-    {
+    public static void app() throws DaoException {
+        CountryDaoInterface ICountryDao = new MySqlCountryDao();
+
         Scanner input = new Scanner(System.in);
         boolean exit = false;
 
-        List<Country> countryList = new ArrayList<>();
-        countryList.add(new Country("Europe", "Ireland","Dublin",5011500,70273,71.3));
-        countryList.add(new Country("Europe","United Kingdom","London",67081000,242495,270.7));
-        countryList.add(new Country("Europe","Iceland","Reykjavik",366425,103000,3.5));
-        countryList.add(new Country("Europe","Luxembourg","Luxembourg City",633622,2586.4,242));
-        countryList.add(new Country("Europe","Liechtenstein","Vaduz",38896,160,237));
-        countryList.add(new Country("North America", "Mexico", "Mexico City", 126014024,1972550,61));
-        countryList.add(new Country("Europe","Denmark","Copenhagen",5873420,42933 ,137.65));
-        countryList.add(new Country("Europe","Poland","Warsaw",38179800,312696 ,123));
-        countryList.add(new Country("Europe","Germany","Berlin", 83190556,357022 ,232));
-        countryList.add(new Country("North America", "United States of America","Washington",331893745,9833520,33.6));
-        countryList.add(new Country("Europe","France","Paris",67413000,	643801,116));
-        countryList.add(new Country("North America", "Canada", "Ottawa", 38436447,9984670,4.2));
-
+        List<Country> countryList = ICountryDao.findAllCountries();
         Map<String, Country> countryHashMap = new HashMap<>();
         Map<Integer, Country> countryTreeMap = new TreeMap<>();
         Queue<Country> countryPriorityQueueSim = new PriorityQueue<>(new CountryPopulationComparator());
@@ -125,10 +119,18 @@ public class Main {
 
     public static void display(List<Country> countryList)
     {
-        for (Country country : countryList)
+        if (countryList.size() < 1)
         {
-            country.displayCountry();
+            System.out.println("No countries found");
         }
+        else
+        {
+            for (Country country : countryList)
+            {
+                country.displayCountry();
+            }
+        }
+
     }
     public static void display(Map<Integer, Country> countryMap)
     {

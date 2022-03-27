@@ -1,4 +1,4 @@
-package com.company;
+package DTOs;
 import java.util.Comparator;
 
 public class CountryPopContinentComparator implements Comparator<Country> {
