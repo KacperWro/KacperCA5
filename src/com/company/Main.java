@@ -20,16 +20,15 @@ public class Main {
         Scanner input = new Scanner(System.in);
         boolean exit = false;
 
-        List<Country> countryList = ICountryDao.findAllCountries();
+//        List<Country> countryList = ICountryDao.findAllCountries();
 //        Map<String, Country> countryHashMap = new HashMap<>();
-        Map<Integer, Country> countryTreeMap = new TreeMap<>();
-        Queue<Country> countryPriorityQueueSim = new PriorityQueue<>(new CountryPopulationComparator());
-
-        for (Country country : countryList)
-        {
+//        Map<Integer, Country> countryTreeMap = new TreeMap<>();
+//
+//        for (Country country : countryList)
+//        {
 //            countryHashMap.put(country.getCountryName().toUpperCase(),country);
-            countryTreeMap.put(country.getPopulation(), country);
-        }
+//            countryTreeMap.put(country.getPopulation(), country);
+//        }
 
         while (!exit)
         {
@@ -49,7 +48,7 @@ public class Main {
 
                 switch (option) {
                     case 1:
-                        display(countryList);
+                        display(ICountryDao.findAllCountries());
                         break;
                     case 2:
                         input.nextLine();
@@ -71,9 +70,17 @@ public class Main {
                         }
                         break;
                     case 3:
+                        Map<Integer, Country> countryTreeMap = new TreeMap<>();
+
+                        for (Country country : ICountryDao.findAllCountries())
+                        {
+                            countryTreeMap.put(country.getPopulation(), country);
+                        }
+                        
                         display(countryTreeMap);
                         break;
                     case 4:
+                        Queue<Country> countryPriorityQueueSim = new PriorityQueue<>(new CountryPopulationComparator());
 //                        countryPriorityQueueSim.add(countryHashMap.get("LIECHTENSTEIN"));
 //                        countryPriorityQueueSim.add(countryHashMap.get("ICELAND"));
 
@@ -106,7 +113,7 @@ public class Main {
                         break;
                     case 5:
                         PriorityQueue<Country> pqTwoFields = new PriorityQueue<>(new CountryPopContinentComparator());
-                        pqTwoFields.addAll(countryList);
+                        pqTwoFields.addAll(ICountryDao.findAllCountries());
 
                         display(pqTwoFields);
                         break;
