@@ -4,6 +4,7 @@ import DAOs.CountryDaoInterface;
 import DAOs.MySqlCountryDao;
 import DTOs.Country;
 import DTOs.CountryPopContinentComparator;
+import DTOs.CountryPopFilterComparator;
 import DTOs.CountryPopulationComparator;
 import Exceptions.DaoException;
 import java.util.*;
@@ -42,9 +43,10 @@ public class Main {
                 System.out.println("3. Display all countries by population");
                 System.out.println("4. Delete country by name");
                 System.out.println("5. Add new country");
-                System.out.println("6. PriorityQueue Sequence Simulation");
-                System.out.println("7. PriorityQueue Two-Field Comparison Demo");
-                System.out.println("8. Exit");
+                System.out.println("6. Filter countries by population");
+                System.out.println("7. PriorityQueue Sequence Simulation");
+                System.out.println("8. PriorityQueue Two-Field Comparison Demo");
+                System.out.println("9. Exit");
                 System.out.println("*************************************\n");
 
                 System.out.print("Select menu item:");
@@ -140,6 +142,11 @@ public class Main {
 
                         break;
                     case 6:
+                        Queue<Country> filteredCountries = new PriorityQueue<>(new CountryPopulationComparator());
+                        filteredCountries.addAll(ICountryDao.findCountriesUsingFilter(new CountryPopFilterComparator()));
+                        display(filteredCountries);
+                        break;
+                    case 7:
                         Queue<Country> countryPriorityQueueSim = new PriorityQueue<>(new CountryPopulationComparator());
 //                        countryPriorityQueueSim.add(countryHashMap.get("LIECHTENSTEIN"));
 //                        countryPriorityQueueSim.add(countryHashMap.get("ICELAND"));
@@ -171,13 +178,13 @@ public class Main {
 
                         System.out.println("REMAINING COUNTRIES HAVE BEEN DISPLAYED AND REMOVED");
                         break;
-                    case 7:
+                    case 8:
                         PriorityQueue<Country> pqTwoFields = new PriorityQueue<>(new CountryPopContinentComparator());
                         pqTwoFields.addAll(ICountryDao.findAllCountries());
 
                         display(pqTwoFields);
                         break;
-                    case 8:
+                    case 9:
                         exit = true;
                         break;
                     default:

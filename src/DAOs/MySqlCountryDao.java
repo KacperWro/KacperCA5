@@ -1,6 +1,7 @@
 package DAOs;
 
 import DTOs.Country;
+import DTOs.CountryPopFilterComparator;
 import Exceptions.DaoException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -206,6 +207,22 @@ public class MySqlCountryDao extends MySqlDao implements CountryDaoInterface {
                 throw new DaoException("addCountry() " + e.getMessage());
             }
         }
+    }
+
+    @Override
+    public List<Country> findCountriesUsingFilter(CountryPopFilterComparator filter) throws DaoException
+    {
+        List<Country> filteredCountries = new ArrayList<>();
+
+        for (Country country : findAllCountries())
+        {
+            if (filter.compare(country, new Country()) <= 0)
+            {
+                filteredCountries.add(country);
+            }
+        }
+
+        return filteredCountries;
     }
 
 }
