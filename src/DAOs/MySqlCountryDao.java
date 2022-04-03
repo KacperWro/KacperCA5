@@ -240,4 +240,9 @@ public class MySqlCountryDao extends MySqlDao implements CountryDaoInterface {
         return allCountriesJson;
     }
 
+    @Override
+    public String findCountryByNameJson(String countryName) throws DaoException
+    {
+        return gsonParser.toJson(findCountryByName(countryName));
+    }
 }

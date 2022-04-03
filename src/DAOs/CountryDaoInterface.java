@@ -12,5 +12,6 @@ public interface CountryDaoInterface {
     void addCountry(Country newCountry) throws DaoException;
     List<Country> findCountriesUsingFilter(CountryPopFilterComparator filter) throws DaoException;
     List<String> findAllCountriesJson() throws DaoException;
+    String findCountryByNameJson(String countryName) throws DaoException;
 
 }

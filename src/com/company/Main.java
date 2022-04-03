@@ -45,9 +45,10 @@ public class Main {
                 System.out.println("5. Add new country");
                 System.out.println("6. Filter countries by population");
                 System.out.println("7. Display all countries in Json");
-                System.out.println("8. PriorityQueue Sequence Simulation");
-                System.out.println("9. PriorityQueue Two-Field Comparison Demo");
-                System.out.println("10. Exit");
+                System.out.println("8. Display country by name in Json");
+                System.out.println("9. PriorityQueue Sequence Simulation");
+                System.out.println("10. PriorityQueue Two-Field Comparison Demo");
+                System.out.println("11. Exit");
                 System.out.println("*************************************\n");
 
                 System.out.print("Select menu item:");
@@ -151,6 +152,14 @@ public class Main {
                         displayJsonList(ICountryDao.findAllCountriesJson());
                         break;
                     case 8:
+                        input.nextLine();
+
+                        System.out.print("Enter country name: ");
+                        countryName = input.nextLine();
+
+                        System.out.println("\n" + ICountryDao.findCountryByNameJson(countryName));
+                        break;
+                    case 9:
                         Queue<Country> countryPriorityQueueSim = new PriorityQueue<>(new CountryPopulationComparator());
 //                        countryPriorityQueueSim.add(countryHashMap.get("LIECHTENSTEIN"));
 //                        countryPriorityQueueSim.add(countryHashMap.get("ICELAND"));
@@ -182,13 +191,13 @@ public class Main {
 
                         System.out.println("REMAINING COUNTRIES HAVE BEEN DISPLAYED AND REMOVED");
                         break;
-                    case 9:
+                    case 10:
                         PriorityQueue<Country> pqTwoFields = new PriorityQueue<>(new CountryPopContinentComparator());
                         pqTwoFields.addAll(ICountryDao.findAllCountries());
 
                         display(pqTwoFields);
                         break;
-                    case 10:
+                    case 11:
                         exit = true;
                         break;
                     default:
