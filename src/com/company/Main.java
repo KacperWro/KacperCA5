@@ -44,9 +44,10 @@ public class Main {
                 System.out.println("4. Delete country by name");
                 System.out.println("5. Add new country");
                 System.out.println("6. Filter countries by population");
-                System.out.println("7. PriorityQueue Sequence Simulation");
-                System.out.println("8. PriorityQueue Two-Field Comparison Demo");
-                System.out.println("9. Exit");
+                System.out.println("7. Display all countries in Json");
+                System.out.println("8. PriorityQueue Sequence Simulation");
+                System.out.println("9. PriorityQueue Two-Field Comparison Demo");
+                System.out.println("10. Exit");
                 System.out.println("*************************************\n");
 
                 System.out.print("Select menu item:");
@@ -147,6 +148,9 @@ public class Main {
                         display(filteredCountries);
                         break;
                     case 7:
+                        displayJsonList(ICountryDao.findAllCountriesJson());
+                        break;
+                    case 8:
                         Queue<Country> countryPriorityQueueSim = new PriorityQueue<>(new CountryPopulationComparator());
 //                        countryPriorityQueueSim.add(countryHashMap.get("LIECHTENSTEIN"));
 //                        countryPriorityQueueSim.add(countryHashMap.get("ICELAND"));
@@ -178,13 +182,13 @@ public class Main {
 
                         System.out.println("REMAINING COUNTRIES HAVE BEEN DISPLAYED AND REMOVED");
                         break;
-                    case 8:
+                    case 9:
                         PriorityQueue<Country> pqTwoFields = new PriorityQueue<>(new CountryPopContinentComparator());
                         pqTwoFields.addAll(ICountryDao.findAllCountries());
 
                         display(pqTwoFields);
                         break;
-                    case 9:
+                    case 10:
                         exit = true;
                         break;
                     default:
@@ -227,6 +231,14 @@ public class Main {
         while(!countryQueue.isEmpty())
         {
             countryQueue.remove().displayCountry();
+        }
+    }
+
+    public static void displayJsonList(List<String> countryList)
+    {
+        for (String country : countryList)
+        {
+            System.out.println(country);
         }
     }
 }

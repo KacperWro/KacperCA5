@@ -3,6 +3,7 @@ package DAOs;
 import DTOs.Country;
 import DTOs.CountryPopFilterComparator;
 import Exceptions.DaoException;
+import com.google.gson.Gson;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MySqlCountryDao extends MySqlDao implements CountryDaoInterface {
+    Gson gsonParser = new Gson();
 
     @Override
     public List<Country> findAllCountries() throws DaoException
@@ -223,6 +225,19 @@ public class MySqlCountryDao extends MySqlDao implements CountryDaoInterface {
         }
 
         return filteredCountries;
+    }
+
+    @Override
+    public List<String> findAllCountriesJson() throws DaoException
+    {
+        List<String> allCountriesJson = new ArrayList<>();
+
+        for (Country country : findAllCountries())
+        {
+            allCountriesJson.add(gsonParser.toJson(country));
+        }
+
+        return allCountriesJson;
     }
 
 }
