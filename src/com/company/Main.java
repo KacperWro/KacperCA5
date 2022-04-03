@@ -41,9 +41,10 @@ public class Main {
                 System.out.println("2. Display country by name");
                 System.out.println("3. Display all countries by population");
                 System.out.println("4. Delete country by name");
-                System.out.println("5. PriorityQueue Sequence Simulation");
-                System.out.println("6. PriorityQueue Two-Field Comparison Demo");
-                System.out.println("7. Exit");
+                System.out.println("5. Add new country");
+                System.out.println("6. PriorityQueue Sequence Simulation");
+                System.out.println("7. PriorityQueue Two-Field Comparison Demo");
+                System.out.println("8. Exit");
                 System.out.println("*************************************\n");
 
                 System.out.print("Select menu item:");
@@ -97,9 +98,48 @@ public class Main {
                         {
                             System.out.println("Country not found");
                         }
-
                         break;
                     case 5:
+                        int population;
+                        double areaSqKm;
+                        double popDensitySqKm;
+
+                        input.nextLine();
+
+                        System.out.print("Enter continent name: ");
+                        String continent = input.nextLine();
+
+                        System.out.print("Enter country name: ");
+                        countryName = input.nextLine();
+
+                        System.out.print("Enter name of capital city: ");
+                        String capital = input.nextLine();
+
+                        do
+                        {
+                            System.out.print("Enter population (positive whole number): ");
+                            population = input.nextInt();
+                        }
+                        while(population < 0);
+
+                        do
+                        {
+                            System.out.print("Enter area in km^2 (positive number): ");
+                            areaSqKm = input.nextDouble();
+                        }
+                        while(areaSqKm < 0);
+
+                        do
+                        {
+                            System.out.print("Enter population density in km^2 (positive number): ");
+                            popDensitySqKm = input.nextInt();
+                        }
+                        while(popDensitySqKm < 0);
+
+                        ICountryDao.addCountry(new Country(continent, countryName, capital, population, areaSqKm, popDensitySqKm));
+
+                        break;
+                    case 6:
                         Queue<Country> countryPriorityQueueSim = new PriorityQueue<>(new CountryPopulationComparator());
 //                        countryPriorityQueueSim.add(countryHashMap.get("LIECHTENSTEIN"));
 //                        countryPriorityQueueSim.add(countryHashMap.get("ICELAND"));
@@ -131,13 +171,13 @@ public class Main {
 
                         System.out.println("REMAINING COUNTRIES HAVE BEEN DISPLAYED AND REMOVED");
                         break;
-                    case 6:
+                    case 7:
                         PriorityQueue<Country> pqTwoFields = new PriorityQueue<>(new CountryPopContinentComparator());
                         pqTwoFields.addAll(ICountryDao.findAllCountries());
 
                         display(pqTwoFields);
                         break;
-                    case 7:
+                    case 8:
                         exit = true;
                         break;
                     default:

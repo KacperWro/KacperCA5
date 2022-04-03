@@ -12,7 +12,7 @@ public class Country {
     public double areaSqKm;
     public double popDensitySqKm;
 
-    //Constructor
+    //Constructors
     public Country(int id, String continent, String countryName, String capital, int population, double areaSqKm, double popDensitySqKm) {
         this.id = id;
         this.continent = continent;

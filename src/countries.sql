@@ -12,6 +12,9 @@ CREATE TABLE `countries` (
 	`areaSqKm` float(20),
 	`popDensitySqKm` float(20),
 	PRIMARY KEY (countryID));
+
+	ALTER TABLE `countries`
+      MODIFY `countryID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 	
 INSERT INTO `countries` (`countryID`, `continent`, `countryName`, `capital`, `population`, `areaSqKm`, `popDensitySqKm`) VALUES
 (1, "Europe", "Ireland","Dublin",5011500,70273,71.3),

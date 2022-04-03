@@ -162,4 +162,50 @@ public class MySqlCountryDao extends MySqlDao implements CountryDaoInterface {
         }
     }
 
+    @Override
+    public void addCountry(Country newCountry) throws DaoException
+    {
+        Connection connection = null;
+        PreparedStatement ps = null;
+
+        try
+        {
+            connection = this.getConnection();
+
+            String query = "INSERT INTO countries (continent, countryName, capital, population, areaSqKm, popDensitySqKm) VALUES (?,?,?,?,?,?)";
+            ps = connection.prepareStatement(query);
+
+            ps.setString(1, newCountry.getContinent());
+            ps.setString(2, newCountry.getCountryName());
+            ps.setString(3, newCountry.getCapital());
+            ps.setInt(4, newCountry.getPopulation());
+            ps.setDouble(5, newCountry.getAreaSqKm());
+            ps.setDouble(6, newCountry.getPopDensitySqKm());
+
+            ps.executeUpdate();
+
+            System.out.println("\nCountry has been successfully added");
+
+        } catch (SQLException e)
+        {
+            throw new DaoException("addCountry() " + e.getMessage());
+        } finally
+        {
+            try
+            {
+                if (ps != null)
+                {
+                    ps.close();
+                }
+                if (connection != null)
+                {
+                    freeConnection(connection);
+                }
+            } catch (SQLException e)
+            {
+                throw new DaoException("addCountry() " + e.getMessage());
+            }
+        }
+    }
+
 }
