@@ -126,5 +126,40 @@ public class MySqlCountryDao extends MySqlDao implements CountryDaoInterface {
         }
         return country;     // reference to User object, or null value
     }
+    @Override
+    public void deleteCountryByName(String countryName) throws DaoException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+
+        try
+        {
+            connection = this.getConnection();
+
+            String query = "DELETE FROM countries WHERE countryName = ?";
+            ps = connection.prepareStatement(query);
+            ps.setString(1, countryName);
+            ps.executeUpdate();
+
+        } catch (SQLException e)
+        {
+            throw new DaoException("deleteCountryByName() " + e.getMessage());
+        } finally
+        {
+            try
+            {
+                if (ps != null)
+                {
+                    ps.close();
+                }
+                if (connection != null)
+                {
+                    freeConnection(connection);
+                }
+            } catch (SQLException e)
+            {
+                throw new DaoException("deleteCountryByName() " + e.getMessage());
+            }
+        }
+    }
 
 }

@@ -19,6 +19,8 @@ public class Main {
 
         Scanner input = new Scanner(System.in);
         boolean exit = false;
+        String countryName;
+        Country foundCountry;
 
 //        List<Country> countryList = ICountryDao.findAllCountries();
 //        Map<String, Country> countryHashMap = new HashMap<>();
@@ -38,9 +40,10 @@ public class Main {
                 System.out.println("1. Display all countries");
                 System.out.println("2. Display country by name");
                 System.out.println("3. Display all countries by population");
-                System.out.println("4. PriorityQueue Sequence Simulation");
-                System.out.println("5. PriorityQueue Two-Field Comparison Demo");
-                System.out.println("6. Exit");
+                System.out.println("4. Delete country by name");
+                System.out.println("5. PriorityQueue Sequence Simulation");
+                System.out.println("6. PriorityQueue Two-Field Comparison Demo");
+                System.out.println("7. Exit");
                 System.out.println("*************************************\n");
 
                 System.out.print("Select menu item:");
@@ -54,10 +57,10 @@ public class Main {
                         input.nextLine();
 
                         System.out.print("Enter country name: ");
-                        String countryName = input.nextLine();
+                        countryName = input.nextLine();
 
-//                        Country foundCountry = countryHashMap.get(countryName.toUpperCase());//Old version looked for country in Country HashMap
-                        Country foundCountry = ICountryDao.findCountryByName(countryName);
+//                        Country foundCountry = countryHashMap.get(countryName.toUpperCase());     //Old version looked for country in Country HashMap
+                        foundCountry = ICountryDao.findCountryByName(countryName);
 
                         if (foundCountry != null)
                         {
@@ -80,6 +83,23 @@ public class Main {
                         display(countryTreeMap);
                         break;
                     case 4:
+                        input.nextLine();
+
+                        System.out.print("Enter country name: ");
+                        countryName = input.nextLine();
+
+                        if(ICountryDao.findCountryByName(countryName) != null)
+                        {
+                            ICountryDao.deleteCountryByName(countryName);
+                            System.out.println("Country has been successfully deleted");
+                        }
+                        else
+                        {
+                            System.out.println("Country not found");
+                        }
+
+                        break;
+                    case 5:
                         Queue<Country> countryPriorityQueueSim = new PriorityQueue<>(new CountryPopulationComparator());
 //                        countryPriorityQueueSim.add(countryHashMap.get("LIECHTENSTEIN"));
 //                        countryPriorityQueueSim.add(countryHashMap.get("ICELAND"));
@@ -111,13 +131,13 @@ public class Main {
 
                         System.out.println("REMAINING COUNTRIES HAVE BEEN DISPLAYED AND REMOVED");
                         break;
-                    case 5:
+                    case 6:
                         PriorityQueue<Country> pqTwoFields = new PriorityQueue<>(new CountryPopContinentComparator());
                         pqTwoFields.addAll(ICountryDao.findAllCountries());
 
                         display(pqTwoFields);
                         break;
-                    case 6:
+                    case 7:
                         exit = true;
                         break;
                     default:
