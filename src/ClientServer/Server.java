@@ -2,6 +2,7 @@ package ClientServer;
 
 import DAOs.CountryDaoInterface;
 import DAOs.MySqlCountryDao;
+import DTOs.Country;
 import Exceptions.DaoException;
 import com.google.gson.Gson;
 
@@ -92,7 +93,8 @@ public class Server
             String message;
             final String DISPLAY_COUNTRY_BY_NAME = "1";
             final String DISPLAY_ALL_COUNTRIES = "2";
-            final String EXIT = "3";
+            final String ADD_NEW_COUNTRY = "3";
+            final String EXIT = "4";
 
             try
             {
@@ -105,7 +107,6 @@ public class Server
                         {
                             String countryName = socketReader.readLine();
                             String countryJsonString = ICountryDao.findCountryByNameJson(countryName);
-                            System.out.println(countryJsonString);
                             socketWriter.println(countryJsonString);
                         }
                         else if (message.equals(DISPLAY_ALL_COUNTRIES))
@@ -113,15 +114,16 @@ public class Server
                             String countriesJsonString = gsonParser.toJson(ICountryDao.findAllCountries());
                             socketWriter.println(countriesJsonString);
                         }
-                        else if (message.startsWith("Time"))
+                        else if (message.equals(ADD_NEW_COUNTRY))
                         {
-                            LocalTime time =  LocalTime.now();
-                            socketWriter.println(time);  // sends current time to client
-                        }
-                        else if (message.startsWith("Echo"))
-                        {
-                            message = message.substring(5); // strip off the 'Echo ' part
-                            socketWriter.println(message);
+                            String countryJsonString = socketReader.readLine();
+                            Country newCountry = gsonParser.fromJson(countryJsonString, Country.class);
+                            ICountryDao.addCountry(newCountry);
+
+                            newCountry = ICountryDao.findCountryByName(newCountry.getCountryName());
+                            countryJsonString = gsonParser.toJson(newCountry);
+
+                            socketWriter.println(countryJsonString);
                         }
                         else
                         {

@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.lang.reflect.Type;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -41,52 +42,122 @@ public class Client
             boolean exit = false;
             final String DISPLAY_COUNTRY_BY_NAME = "1";
             final String DISPLAY_ALL_COUNTRIES = "2";
-            final String EXIT = "3";
+            final String ADD_NEW_COUNTRY = "3";
+            final String EXIT = "4";
 
             while (!exit)
             {
-                System.out.println("\n*************************************");
-                System.out.println("1. Display country by name");
-                System.out.println("2. Display all countries");
-                System.out.println("3. Exit");
-                System.out.println("*************************************\n");
-
-                System.out.print("Select menu item:");
-                String option = in.next();
-
-                socketWriter.println(option);
-
-                if(option.equals(DISPLAY_COUNTRY_BY_NAME))
+                try
                 {
-                    //APPEND COUNTRY NAME TO SOCKETREADER.NEXTLINE()
+                    System.out.println("\n*************************************");
+                    System.out.println("1. Display country by name");
+                    System.out.println("2. Display all countries");
+                    System.out.println("3. Add new country");
+                    System.out.println("4. Exit");
+                    System.out.println("*************************************\n");
 
-                    in.nextLine();
+                    System.out.print("Select menu item:");
+                    String option = in.next();
 
-                    System.out.print("Enter country name: ");
-                    String countryName = in.nextLine();
-                    socketWriter.println(countryName);
+                    socketWriter.println(option);
 
-                    String countryJsonString = socketReader.nextLine();
+                    if(option.equals(DISPLAY_COUNTRY_BY_NAME))
+                    {
+                        in.nextLine();
 
-                    Country country = gsonParser.fromJson(countryJsonString, Country.class);
-                    country.displayCountry();
+                        System.out.print("Enter country name: ");
+                        String countryName = in.nextLine();
+                        socketWriter.println(countryName);
+
+                        String countryJsonString = socketReader.nextLine();
+
+                        Country country = gsonParser.fromJson(countryJsonString, Country.class);
+
+                        if(country != null)
+                        {
+                            country.displayCountry();
+                        }
+                        else
+                        {
+                            System.out.println("Country not found");
+                        }
+
+                    }
+                    else if(option.equals(DISPLAY_ALL_COUNTRIES))
+                    {
+                        Type countryListType = new TypeToken<ArrayList<Country>>(){}.getType();
+                        String countriesJsonString = socketReader.nextLine();
+                        List<Country> countryList = gsonParser.fromJson(countriesJsonString, countryListType);
+
+                        display(countryList);
+                    }
+                    else if (option.equals(ADD_NEW_COUNTRY))
+                    {
+                        int population;
+                        double areaSqKm;
+                        double popDensitySqKm;
+
+                        in.nextLine();
+
+                        System.out.print("Enter continent name: ");
+                        String continent = in.nextLine();
+
+                        System.out.print("Enter country name: ");
+                        String countryName = in.nextLine();
+
+                        System.out.print("Enter name of capital city: ");
+                        String capital = in.nextLine();
+
+                        do
+                        {
+                            System.out.print("Enter population (positive whole number): ");
+                            population = in.nextInt();
+                        }
+                        while(population < 0);
+
+                        do
+                        {
+                            System.out.print("Enter area in km^2 (positive number): ");
+                            areaSqKm = in.nextDouble();
+                        }
+                        while(areaSqKm < 0);
+
+                        do
+                        {
+                            System.out.print("Enter population density in km^2 (positive number): ");
+                            popDensitySqKm = in.nextInt();
+                        }
+                        while(popDensitySqKm < 0);
+
+                        String countryJsonString = gsonParser.toJson(new Country(continent, countryName, capital, population, areaSqKm, popDensitySqKm));
+                        socketWriter.println(countryJsonString);
+
+                        countryJsonString = socketReader.nextLine();
+                        Country newCountry = gsonParser.fromJson(countryJsonString, Country.class);
+
+                        if (newCountry != null)
+                        {
+                            System.out.println("Country has been successfully added");
+                            newCountry.displayCountry();
+                        }
+                        else
+                        {
+                            System.out.println("Failed to add new country");
+                        }
+                    }
+                    else if (option.equals(EXIT))
+                    {
+                        exit = true;
+                    }
+                    else
+                    {
+                        String input = socketReader.nextLine();
+                        System.out.println("Client message: Response from server: \"" + input + "\"");
+                    }
                 }
-                else if(option.equals(DISPLAY_ALL_COUNTRIES))
+                catch (InputMismatchException e)
                 {
-                    Type countryListType = new TypeToken<ArrayList<Country>>(){}.getType();
-                    String countriesJsonString = socketReader.nextLine();
-                    List<Country> countryList = gsonParser.fromJson(countriesJsonString, countryListType);
-
-                    display(countryList);
-                }
-                else if (option.equals(EXIT))
-                {
-                    exit = true;
-                }
-                else
-                {
-                    String input = socketReader.nextLine();
-                    System.out.println("Client message: Response from server: \"" + input + "\"");
+                    System.out.println("Invalid input, please try again");
                 }
             }
 
@@ -96,9 +167,11 @@ public class Client
             socketReader.close();
             socket.close();
 
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             System.out.println("Client message: IOException: "+e);
         }
+
     }
 
     public static void display(List<Country> countryList)
