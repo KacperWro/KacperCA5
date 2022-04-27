@@ -43,7 +43,8 @@ public class Client
             final String DISPLAY_COUNTRY_BY_NAME = "1";
             final String DISPLAY_ALL_COUNTRIES = "2";
             final String ADD_NEW_COUNTRY = "3";
-            final String EXIT = "4";
+            final String DELETE_COUNTRY_BY_NAME = "4";
+            final String EXIT = "5";
 
             while (!exit)
             {
@@ -53,7 +54,8 @@ public class Client
                     System.out.println("1. Display country by name");
                     System.out.println("2. Display all countries");
                     System.out.println("3. Add new country");
-                    System.out.println("4. Exit");
+                    System.out.println("4. Delete country by name");
+                    System.out.println("5. Exit");
                     System.out.println("*************************************\n");
 
                     System.out.print("Select menu item:");
@@ -148,6 +150,17 @@ public class Client
                     else if (option.equals(EXIT))
                     {
                         exit = true;
+                    }
+                    else if (option.equals(DELETE_COUNTRY_BY_NAME))
+                    {
+                        in.nextLine();
+
+                        System.out.print("Enter country name: ");
+                        String countryName = in.nextLine();
+
+                        socketWriter.println(countryName);
+
+                        System.out.println(socketReader.nextLine());
                     }
                     else
                     {

@@ -94,7 +94,8 @@ public class Server
             final String DISPLAY_COUNTRY_BY_NAME = "1";
             final String DISPLAY_ALL_COUNTRIES = "2";
             final String ADD_NEW_COUNTRY = "3";
-            final String EXIT = "4";
+            final String DELETE_COUNTRY_BY_NAME = "4";
+            final String EXIT = "5";
 
             try
             {
@@ -124,6 +125,12 @@ public class Server
                             countryJsonString = gsonParser.toJson(newCountry);
 
                             socketWriter.println(countryJsonString);
+                        }
+                        else if (message.equals(DELETE_COUNTRY_BY_NAME))
+                        {
+                            String countryName = socketReader.readLine();
+                            ICountryDao.deleteCountryByName(countryName);
+                            socketWriter.println("Country has been successfully deleted");
                         }
                         else
                         {
