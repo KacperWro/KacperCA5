@@ -1,5 +1,6 @@
 package DAOs;
 
+import ClientServer.SummaryData;
 import DTOs.Country;
 import DTOs.CountryPopFilterComparator;
 import Exceptions.DaoException;
@@ -14,6 +15,60 @@ import java.util.List;
 public class MySqlCountryDao extends MySqlDao implements CountryDaoInterface {
     Gson gsonParser = new Gson();
 
+
+    @Override
+    public SummaryData getSummaryData() throws DaoException
+    {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet resultSet = null;
+        SummaryData summaryData = null;
+
+        try
+        {
+            connection = this.getConnection();
+
+            String query = "SELECT COUNT(*), SUM(population), AVG(population) FROM countries";
+            ps = connection.prepareStatement(query);
+
+            resultSet = ps.executeQuery();
+            while (resultSet.next())
+            {
+                double count = resultSet.getDouble("COUNT(*)");
+                double totalPop = resultSet.getDouble("SUM(population)");
+                double avgPop = resultSet.getDouble("AVG(population)");
+
+                summaryData = new SummaryData(count, totalPop, avgPop);
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new DaoException("getSummaryDataResultSet() " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                if (resultSet != null)
+                {
+                    resultSet.close();
+                }
+                if (ps != null)
+                {
+                    ps.close();
+                }
+                if (connection != null)
+                {
+                    freeConnection(connection);
+                }
+            }
+            catch (SQLException e)
+            {
+                throw new DaoException("getSummaryData() " + e.getMessage());
+            }
+        }
+        return summaryData;
+    }
     @Override
     public List<Country> findAllCountries() throws DaoException
     {

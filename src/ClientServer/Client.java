@@ -46,6 +46,7 @@ public class Client
             final String DISPLAY_ALL_COUNTRIES = "2";
             final String ADD_NEW_COUNTRY = "3";
             final String DELETE_COUNTRY_BY_NAME = "4";
+            final String GET_SUMMARY_DATA = "5";
             final String EXIT = "6";
 
             while (!exit)
@@ -57,7 +58,7 @@ public class Client
                     System.out.println("2. Display all countries");
                     System.out.println("3. Add new country");
                     System.out.println("4. Delete country by name");
-                    System.out.println("5. ");
+                    System.out.println("5. Get summary data");
                     System.out.println("6. Exit");
                     System.out.println("*************************************\n");
 
@@ -169,6 +170,20 @@ public class Client
                         socketWriter.println(countryName);
 
                         System.out.println(socketReader.nextLine());
+                    }
+                    else if (option.equals(GET_SUMMARY_DATA))
+                    {
+                        String summaryDataJson = socketReader.nextLine();
+                        SummaryData summaryData = gsonParser.fromJson(summaryDataJson, SummaryData.class);
+
+                        if (summaryData != null)
+                        {
+                            summaryData.display();
+                        }
+                        else
+                        {
+                            System.out.println("ERROR: Failed to fetch summary data");
+                        }
                     }
                     else
                     {

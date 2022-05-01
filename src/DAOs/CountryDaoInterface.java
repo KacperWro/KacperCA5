@@ -1,5 +1,6 @@
 package DAOs;
 
+import ClientServer.SummaryData;
 import DTOs.Country;
 import DTOs.CountryPopFilterComparator;
 import Exceptions.DaoException;
@@ -13,5 +14,6 @@ public interface CountryDaoInterface {
     List<Country> findCountriesUsingFilter(CountryPopFilterComparator filter) throws DaoException;
     List<String> findAllCountriesJson() throws DaoException;
     String findCountryByNameJson(String countryName) throws DaoException;
+    SummaryData getSummaryData() throws DaoException;
 
 }

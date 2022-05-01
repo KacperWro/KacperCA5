@@ -95,7 +95,8 @@ public class Server
             final String DISPLAY_ALL_COUNTRIES = "2";
             final String ADD_NEW_COUNTRY = "3";
             final String DELETE_COUNTRY_BY_NAME = "4";
-            final String EXIT = "5";
+            final String GET_SUMMARY_DATA = "5";
+            final String EXIT = "6";
 
             try
             {
@@ -131,6 +132,11 @@ public class Server
                             String countryName = socketReader.readLine();
                             ICountryDao.deleteCountryByName(countryName);
                             socketWriter.println("Country has been successfully deleted");
+                        }
+                        else if (message.equals(GET_SUMMARY_DATA))
+                        {
+                            String summaryDataJson = gsonParser.toJson(ICountryDao.getSummaryData());
+                            socketWriter.println(summaryDataJson);
                         }
                         else
                         {
