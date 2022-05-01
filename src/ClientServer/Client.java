@@ -39,12 +39,14 @@ public class Client
 
             Scanner socketReader = new Scanner(socket.getInputStream());  // wait for, and retrieve the reply
 
+            //SEQUENCE DIAGRAM: SOCKET WRITERS
+
             boolean exit = false;
             final String DISPLAY_COUNTRY_BY_NAME = "1";
             final String DISPLAY_ALL_COUNTRIES = "2";
             final String ADD_NEW_COUNTRY = "3";
             final String DELETE_COUNTRY_BY_NAME = "4";
-            final String EXIT = "5";
+            final String EXIT = "6";
 
             while (!exit)
             {
@@ -55,7 +57,8 @@ public class Client
                     System.out.println("2. Display all countries");
                     System.out.println("3. Add new country");
                     System.out.println("4. Delete country by name");
-                    System.out.println("5. Exit");
+                    System.out.println("5. ");
+                    System.out.println("6. Exit");
                     System.out.println("*************************************\n");
 
                     System.out.print("Select menu item:");
@@ -73,6 +76,8 @@ public class Client
 
                         String countryJsonString = socketReader.nextLine();
 
+                        System.out.println(countryJsonString);
+
                         Country country = gsonParser.fromJson(countryJsonString, Country.class);
 
                         if(country != null)
@@ -89,6 +94,9 @@ public class Client
                     {
                         Type countryListType = new TypeToken<ArrayList<Country>>(){}.getType();
                         String countriesJsonString = socketReader.nextLine();
+
+                        System.out.println(countriesJsonString);
+
                         List<Country> countryList = gsonParser.fromJson(countriesJsonString, countryListType);
 
                         display(countryList);
